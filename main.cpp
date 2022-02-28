@@ -1,9 +1,5 @@
-#include <chrono>
-#include <ctime>
-#include <iomanip>
-#include <iostream>
-
 #include "lib/cxxopts.hpp"
+#include "now.hpp"
 
 auto make_options() {
   cxxopts::Options options("now", "Print now!");
@@ -23,9 +19,6 @@ int main(int argc, char **argv) {
     exit(0);
   }
 
-  auto format = result["format"].as<std::string>().c_str();
-  auto now = std::chrono::system_clock::now();
-  auto time = std::chrono::system_clock::to_time_t(now);
-  auto formatted = std::put_time(std::localtime(&time), format);
-  std::cout << formatted << std::endl;
+  auto format = result["format"].as<std::string>();
+  now::print(format);
 }
